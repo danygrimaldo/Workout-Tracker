@@ -1,24 +1,16 @@
-//Using the activities for a foundation for the models
-//looking for the proper format to label these js files
-//Will work with TAs before class to get this going
-
 const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-const LibrarySchema = new Schema({
-  name: {
-    type: String,
-    unique: true,
-  },
-  books: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Book",
-    },
-  ],
+const ExerciseSchema = new Schema({
+  name: String,
+  type: String,
+  weight: Number,
+  sets: Number,
+  reps: Number,
+  duration: Number,
 });
 
-const Library = mongoose.model("Library", LibrarySchema);
+const Exercise = mongoose.model("Exercise", ExerciseSchema);
 
-module.exports = Library;
+module.exports = Exercise;
