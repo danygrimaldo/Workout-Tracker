@@ -35,8 +35,7 @@ router.post("/api/workouts/exercise", ({ body }, res) => {
 });
 
 router.get("/api/workouts", (req, res) => {
-  Workouts.find({})
-    .sort({ date: -1 })
+  Workouts.find()
     .then((dbWorkouts) => {
       res.json(dbWorkouts);
     })
@@ -45,16 +44,16 @@ router.get("/api/workouts", (req, res) => {
     });
 });
 
-router.get("/exercise", (req, res) => {
-  Workouts.find({ id: req.params.id })
-    .sort({ date: -1 })
-    .then((dbWorkouts) => {
-      res.json(dbWorkouts);
-    })
-    .catch((err) => {
-      res.status(400).json(err);
-    });
-});
+// router.get("/exercise", (req, res) => {
+//   Workouts.find({ id: req.params.id })
+//     .sort({ date: -1 })
+//     .then((dbWorkouts) => {
+//       res.json(dbWorkouts);
+//     })
+//     .catch((err) => {
+//       res.status(400).json(err);
+//     });
+// });
 
 //DELETE - FIND BY ID and DELETE
 
