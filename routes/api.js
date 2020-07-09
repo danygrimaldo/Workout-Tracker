@@ -14,18 +14,24 @@ router.put("/api/workouts", ({ body }, res) => {
     });
 });
 
-router.post("/api/workouts", ({ body }, res) => {
-  Workouts.create(body)
-    .then((dbWorkouts) => {
-      res.json(dbWorkouts);
-    })
-    .catch((err) => {
-      res.status(400).json(err);
-    });
+router.put("/api/workouts/:id", ({ params, body }, res) => {
+  Workouts.findById(params.id).then((dbWorkouts) => {
+    dbWorkouts.exercises.push(body);
+    Workouts.findByIdAndUpdate(
+      params.id,
+      dbWorkouts,
+      (err, result) => {
+        if (err) res.json(err);
+        else res.json(result);
+      }
+      // res.json(dbWorkouts);
+      // console.log(dbWorkouts);
+    );
+  });
 });
 
-router.post("/api/workouts/exercise", ({ body }, res) => {
-  Workouts.insertMany(body)
+router.post("/api/workouts", ({ body }, res) => {
+  Workouts.create(body)
     .then((dbWorkouts) => {
       res.json(dbWorkouts);
     })
@@ -44,20 +50,17 @@ router.get("/api/workouts", (req, res) => {
     });
 });
 
-// router.get("/exercise", (req, res) => {
-//   Workouts.find({ id: req.params.id })
-//     .sort({ date: -1 })
-//     .then((dbWorkouts) => {
-//       res.json(dbWorkouts);
-//     })
-//     .catch((err) => {
-//       res.status(400).json(err);
-//     });
-// });
-
 //DELETE - FIND BY ID and DELETE
 
-//api/workouts/range -
-//".find" + ".limit"
+router.get("/api/workouts/range", (req, res) => {
+  Workouts.find({})
+    .then((dbWorkouts) => {
+      res.json(dbWorkouts);
+    })
+    .catch((err) => {
+      res.status(400).json(err);
+    });
+});
+// ".find" + ".limit"
 
 module.exports = router;
